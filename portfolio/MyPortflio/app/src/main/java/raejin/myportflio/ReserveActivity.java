@@ -38,7 +38,7 @@ public class ReserveActivity extends AppCompatActivity {
                         Log.d("calender view", i +"/"+ i1 +"/"+ i2);
                         Toast.makeText(getApplicationContext(),
                                 i +"/"+ i1 +"/"+ i2,
-                                Toast.LENGTH_SHORT);
+                                Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -52,7 +52,7 @@ public class ReserveActivity extends AppCompatActivity {
         onBackPressed();
         return true;
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(Menu aMenu) {
         getMenuInflater().inflate(R.menu.menu_reserve, aMenu);
@@ -66,7 +66,7 @@ public class ReserveActivity extends AppCompatActivity {
                     Log.d("menu item", "item1 pressed");
                 Toast.makeText(getApplicationContext(),
                         "item1 pressed",
-                        Toast.LENGTH_SHORT);
+                        Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(
                         getApplicationContext(),
                         MainActivity.class);
