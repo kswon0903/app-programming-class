@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     Button btn_left, btn_center, btn_right;
@@ -12,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         btn_left = (Button)findViewById(R.id.btn_left);
         btn_center = (Button)findViewById(R.id.btn_center);
@@ -21,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("btn_listener", "btn_left pressed");
+                Toast.makeText(getApplicationContext(),
+                        "btn_left pressed",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -28,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("btn_listener", "btn_center pressed");
+                Toast.makeText(getApplicationContext(),
+                        "btn_center pressed",
+                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -35,9 +43,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("btn_listener", "btn_right pressed");
+                Toast.makeText(getApplicationContext(),
+                        "btn_right pressed",
+                        Toast.LENGTH_SHORT).show();
             }
         });
-
-        setContentView(R.layout.activity_main);
     }
 }
