@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -44,6 +45,28 @@ public class MainActivity extends AppCompatActivity {
         radioButton_blue = (RadioButton)findViewById(R.id.radioButton_blue);
         switch_green = (Switch)findViewById(R.id.switch_green);
         radioGroup_colors = (RadioGroup)findViewById(R.id.radioGroup_colors);
+
+        switch_green.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                /**
+                 * b : 체크 여부
+                 */
+                if(b) {
+                    Toast.makeText(getApplicationContext(),
+                            "green 버튼이 ON 되었습니다.",
+                            Toast.LENGTH_SHORT).show();
+
+                    switch_green.setText("ON");
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            "green 버튼이 OFF 되었습니다.",
+                            Toast.LENGTH_SHORT).show();
+                    switch_green.setText("OFF");
+                }
+            }
+        });
 
         radioGroup_colors.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
