@@ -134,13 +134,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
-
+            //현재 edittext에 입력된 값(문자열형)을 읽어온다.
             input = editText_result.getText().toString();
 
+            //equals()함수는 소괄호 안의 객체를 비교
+            // 같으면 참, 다르면 거짓
+            // operator와 num1변수의 값이 공백이 아니면 if문 안의 내용을 수행한다
             if(!operator.equals("") && !num1.equals("")) {
                 input = "";
             }
-
+            // view 는 내가 클릭한 버튼 객체
+            // view.getId() 내가 클릭한 버튼의 아이디
             switch(view.getId()) {
                 case R.id.button_0:
                     input += "0";
@@ -176,6 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     input += ".";
                     break;
             }
+            // 입력한 값을 edittext에 적용하기
             editText_result.setText(input);
         }
     }
