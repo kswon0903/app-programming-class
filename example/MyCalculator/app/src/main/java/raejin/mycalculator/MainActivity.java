@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     class NumberListener implements View.OnClickListener {
+        // 입력한 값을 임시로 저장하는 변수
         String input = "";
 
         @Override
