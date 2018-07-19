@@ -58,9 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         webView_web.loadUrl("http://www.naver.com");
-
-
-
+       
 
 
     }
