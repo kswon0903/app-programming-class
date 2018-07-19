@@ -5,6 +5,10 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.Toast;
@@ -16,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     RatingBar ratingBar_rating1, ratingBar_rating2, ratingBar_rating3;
     VideoView videoView_video;
+    WebView webView_web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
         videoView_video = (VideoView)findViewById(R.id.videoView_video);
 
+        webView_web = (WebView)findViewById(R.id.webView_web);
+
         ratingBar_rating1.setOnRatingBarChangeListener(new RatingListener());
         ratingBar_rating2.setOnRatingBarChangeListener(new RatingListener());
         ratingBar_rating3.setOnRatingBarChangeListener(new RatingListener());
@@ -39,6 +46,19 @@ public class MainActivity extends AppCompatActivity {
 
         MediaController mediaController = new MediaController(this);
         videoView_video.setMediaController(mediaController);
+
+        WebSettings ws = webView_web.getSettings();
+        ws.setJavaScriptEnabled(true);
+
+        webView_web.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView_web.loadUrl("http://www.naver.com");
+
 
 
 
