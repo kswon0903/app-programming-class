@@ -11,6 +11,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.RatingBar;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     RatingBar ratingBar_rating1, ratingBar_rating2, ratingBar_rating3;
     VideoView videoView_video;
     WebView webView_web;
+    SeekBar seekBar_seekbar;
+    TextView textView_show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         videoView_video = (VideoView)findViewById(R.id.videoView_video);
 
         webView_web = (WebView)findViewById(R.id.webView_web);
+
+        seekBar_seekbar = (SeekBar)findViewById(R.id.seekBar_seekbar);
+
+        textView_show = (TextView)findViewById(R.id.textView_show);
 
         ratingBar_rating1.setOnRatingBarChangeListener(new RatingListener());
         ratingBar_rating2.setOnRatingBarChangeListener(new RatingListener());
@@ -58,9 +66,37 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         webView_web.loadUrl("http://www.naver.com");
-       
 
+        seekBar_seekbar.setOnSeekBarChangeListener(new SeekbarListener());
+    }
 
+    class SeekbarListener implements SeekBar.OnSeekBarChangeListener {
+
+        // seekbar를 조작했을 때
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            /**
+             * i : 이동한 값
+             * b : 사용자가 seekbar를 조작하면 true, 아니면 false
+             */
+            textView_show.setText("값은? " + i);
+        }
+
+        // 드래그를 시작할 때
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            Toast.makeText(getApplicationContext(),
+                    "드래그를 시작합니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        // 드래그를 마칠 때
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            Toast.makeText(getApplicationContext(),
+                    "드래그를 끝냈습니다.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 
     class RatingListener implements RatingBar.OnRatingBarChangeListener {
