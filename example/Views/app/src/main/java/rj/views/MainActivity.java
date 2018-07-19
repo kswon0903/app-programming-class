@@ -7,8 +7,11 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +20,11 @@ import org.w3c.dom.Text;
 public class MainActivity extends AppCompatActivity {
     Button btn_left, btn_center, btn_right;
     ImageView imageView_image;
-    EditText editText_id, editText_password, editText_number;
+    EditText editText_number;
     TextView textView_message;
+    CheckBox checkBox_red;
+    RadioButton radioButton_blue;
+    Switch switch_green;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +35,23 @@ public class MainActivity extends AppCompatActivity {
         btn_center = (Button)findViewById(R.id.btn_center);
         btn_right = (Button)findViewById(R.id.btn_right);
         imageView_image = (ImageView)findViewById(R.id.imageView_image);
-        editText_id = (EditText)findViewById(R.id.editText_id);
-        editText_password = (EditText)findViewById(R.id.editText_password);
-        editText_number = (EditText)findViewById(R.id.editText_number);
         textView_message = (TextView)findViewById(R.id.textView_message);
+        editText_number = (EditText)findViewById(R.id.editText_number);
+        checkBox_red = (CheckBox)findViewById(R.id.checkBox_red);
+        radioButton_blue = (RadioButton)findViewById(R.id.radioButton_blue);
+        switch_green = (Switch)findViewById(R.id.switch_green);
+
+        checkBox_red.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if(checkBox_red.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            "RED 버튼이 선택되었습니다.",
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         btn_left.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
                         "btn_left pressed",
                         Toast.LENGTH_SHORT).show();
 
-                String id = editText_id.getText().toString();
-                textView_message.setText(id);
+                checkBox_red.setChecked(true);
             }
         });
 
@@ -55,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         "btn_center pressed",
                         Toast.LENGTH_SHORT).show();
 
-                String password = editText_password.getText().toString();
-                textView_message.setText(password);
+
             }
         });
 
@@ -68,8 +85,7 @@ public class MainActivity extends AppCompatActivity {
                         "btn_right pressed",
                         Toast.LENGTH_SHORT).show();
 
-                String number = editText_number.getText().toString();
-                textView_message.setText(number);
+
             }
         });
 
@@ -85,17 +101,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editText_number.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                Log.d("edittext listener", editText_id.getText().toString());
-                Toast.makeText(getApplicationContext(),
-                        editText_id.getText().toString(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        editText_id.addTextChangedListener(new TextWatcher() {
+        editText_number.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // 입력하기 전에
