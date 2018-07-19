@@ -11,6 +11,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
     EditText editText_number;
     TextView textView_message;
     CheckBox checkBox_red;
-    RadioButton radioButton_blue;
+    RadioButton radioButton_blue, radioButton_yellow;
     Switch switch_green;
+    RadioGroup radioGroup_colors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +40,31 @@ public class MainActivity extends AppCompatActivity {
         textView_message = (TextView)findViewById(R.id.textView_message);
         editText_number = (EditText)findViewById(R.id.editText_number);
         checkBox_red = (CheckBox)findViewById(R.id.checkBox_red);
+        radioButton_yellow = (RadioButton)findViewById(R.id.radioButton_yellow);
         radioButton_blue = (RadioButton)findViewById(R.id.radioButton_blue);
         switch_green = (Switch)findViewById(R.id.switch_green);
+        radioGroup_colors = (RadioGroup)findViewById(R.id.radioGroup_colors);
 
+        radioGroup_colors.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                /*
+                i(checked id) : 체크된 아이디
+                 */
+                switch(i) {
+                    case R.id.radioButton_blue:
+                        Toast.makeText(getApplicationContext(),
+                                "Blue 버튼이 선택되었습니다.",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radioButton_yellow:
+                        Toast.makeText(getApplicationContext(),
+                                "Yellow 버튼이 선택되었습니다.",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            }
+        });
         checkBox_red.setOnClickListener(new View.OnClickListener() {
 
             @Override

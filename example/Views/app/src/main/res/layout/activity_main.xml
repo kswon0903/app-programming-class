@@ -151,7 +151,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.81" />
+        app:layout_constraintGuide_percent="0.84" />
 
     <CheckBox
         android:id="@+id/checkBox_red"
@@ -181,18 +181,39 @@
         app:layout_constraintStart_toEndOf="@+id/guideline6"
         app:layout_constraintTop_toBottomOf="@+id/guideline7" />
 
-    <RadioButton
-        android:id="@+id/radioButton_blue"
+    <RadioGroup
+        android:id="@+id/radioGroup_colors"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginStart="9dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="BLUE"
-        app:layout_constraintBottom_toTopOf="@+id/guideline8"
-        app:layout_constraintEnd_toStartOf="@+id/guideline6"
-        app:layout_constraintStart_toEndOf="@+id/guideline5"
-        app:layout_constraintTop_toBottomOf="@+id/guideline7" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guideline9"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline8"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioButton
+            android:id="@+id/radioButton_yellow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="YELLOW"
+            tools:layout_editor_absoluteX="166dp"
+            tools:layout_editor_absoluteY="393dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton_blue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="BLUE"
+            tools:layout_editor_absoluteX="58dp"
+            tools:layout_editor_absoluteY="404dp" />
+    </RadioGroup>
 
 </android.support.constraint.ConstraintLayout>
