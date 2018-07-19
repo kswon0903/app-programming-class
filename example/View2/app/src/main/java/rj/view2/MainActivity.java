@@ -21,8 +21,36 @@ public class MainActivity extends AppCompatActivity {
 
         // EngListener의 객체 만들기
         EngListener engListener = new EngListener();
+        KorListener korListener = new KorListener();
 
-        button_english.setOnClickListener(engListener);
+        BtnListener btnListener = new BtnListener();
+
+        button_korean.setOnClickListener(btnListener);
+        button_english.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),
+                        "korean 버튼이 클릭되었습니다.",
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    class BtnListener implements View.OnClickListener {
+        public void onClick(View view) {
+            switch(view.getId()) {
+                case R.id.button_english:
+                    Toast.makeText(getApplicationContext(),
+                            "english 버튼이 클릭되었습니다.",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.button_korean:
+                    Toast.makeText(getApplicationContext(),
+                            "korean 버튼이 클릭되었습니다.",
+                            Toast.LENGTH_LONG).show();
+                    break;
+            }
+        }
     }
 
     // english 버튼에게 기능을 부여하기 위한 EngListener를 만드는 클래스
@@ -41,6 +69,14 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),
                     "english 버튼이 클릭되었습니다.",
                     Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class KorListener implements View.OnClickListener {
+        public void onClick(View view) {
+            Toast.makeText(getApplicationContext(),
+                    "korean 버튼이 클릭되었습니다.",
+                    Toast.LENGTH_LONG).show();
         }
     }
 
