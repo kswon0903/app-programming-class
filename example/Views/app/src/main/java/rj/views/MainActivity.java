@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         imageView_car.setOnLongClickListener(imgListener);
         imageView_car.setOnClickListener(new ImgListener2());
 
+
+
         switch_green.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
 
             @Override
@@ -238,16 +240,24 @@ public class MainActivity extends AppCompatActivity {
             bImageToggle = !bImageToggle;
 
             // 여러개의 이미지 뷰를 활용할 경우
-            /*
+
             switch (view.getId()) {
                 case R.id.imageView_car:
-                    imageView_car.setImageResource(R.drawable.android);
+                    if(imageView_car.getTag().equals(R.id.imageView_image)) {
+                        imageView_car.setTag(R.id.imageView_car);
+                        imageView_car.setImageResource(R.drawable.car);
+                    } else {
+                        imageView_car.setTag(R.id.imageView_car);
+                        imageView_car.setImageResource(R.drawable.android);
+                    }
+
                     break;
                 case R.id.imageView_image:
+                    imageView_car.setTag(R.id.imageView_image);
                     imageView_car.setImageResource(R.drawable.car);
                     break;
             }
-            */
+
         }
     }
 }
