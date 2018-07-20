@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity {
     Switch switch_green;
     RadioGroup radioGroup_colors;
 
+    ImageView imageView_car;
+
+    boolean bImageToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +49,16 @@ public class MainActivity extends AppCompatActivity {
         radioButton_blue = (RadioButton)findViewById(R.id.radioButton_blue);
         switch_green = (Switch)findViewById(R.id.switch_green);
         radioGroup_colors = (RadioGroup)findViewById(R.id.radioGroup_colors);
+
+        imageView_car = (ImageView)findViewById(R.id.imageView_car);
+        bImageToggle = true;
+
+        // step 4
+        ImgListener imgListener = new ImgListener();
+
+        // step 5
+        imageView_car.setOnLongClickListener(imgListener);
+        imageView_car.setOnClickListener(new ImgListener2());
 
         switch_green.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener() {
 
@@ -189,5 +203,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    // 이미지를 길게 눌렸을 때 메시지를 표시하기 위한 리스너의 클래스
+    class ImgListener implements View.OnLongClickListener {
+        // 길게 눌렸을 경우에 실행되는 함수 onLongClick()
+        @Override
+        public boolean onLongClick(View view) {
+            // 앱화면에 잠시 나타나는 Toast 메시지를 표시
+            Toast.makeText(getApplicationContext(),
+                    "그림이 꾹 눌렸습니다.",
+                    Toast.LENGTH_LONG).show();
+            // 실행되면 Logcat에 메시지가 나타난다.
+            // 첫번째 매개변수는 tag 이다.
+            // 두번째 매개변수는 나타나는 메시지
+            Log.d("tag", "롱클릭이 실행됨");
+            return false;
+        }
+    }
+
+    class ImgListener2 implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            // 이미지 뷰의 나타나는 이미지를 수정하는 setImageResource()
+            // res / drawable 안의 그림을 넣을 수 있다.
+            imageView_car.setImageResource(R.drawable.android);
+
+            if(bImageToggle) {
+                imageView_car.setImageResource(R.drawable.android);
+            } else {
+                imageView_car.setImageResource(R.drawable.car);
+            }
+            bImageToggle = !bImageToggle;
+
+            // 여러개의 이미지 뷰를 활용할 경우
+            /*
+            switch (view.getId()) {
+                case R.id.imageView_car:
+                    imageView_car.setImageResource(R.drawable.android);
+                    break;
+                case R.id.imageView_image:
+                    imageView_car.setImageResource(R.drawable.car);
+                    break;
+            }
+            */
+        }
     }
 }
