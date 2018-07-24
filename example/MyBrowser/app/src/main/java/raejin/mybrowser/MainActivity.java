@@ -10,11 +10,12 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText editText_url;
     WebView webView_main;
-    Button button_back, button_forward;
+    Button button_back, button_forward, button_go;
 
 
     @Override
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         webView_main = (WebView)findViewById(R.id.webView_main);
         button_back = (Button)findViewById(R.id.button_back);
         button_forward = (Button)findViewById(R.id.button_forward);
+        button_go = (Button)findViewById(R.id.button_go);
 
         final WebSettings webSettings = webView_main.getSettings();
         webSettings.setJavaScriptEnabled(true);
@@ -53,7 +55,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        butto
+        button_go.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                webView_main.loadUrl(editText_url.getText().toString());
+            }
+        });
+
     }
 
 
