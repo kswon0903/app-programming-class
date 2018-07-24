@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         switch_green.setOnCheckedChangeListener(switchListener);
         checkBox_blue.setOnClickListener(checkboxListener);
         radioGroup_colors.setOnCheckedChangeListener(radioListener);
-       
+
     }
 
 

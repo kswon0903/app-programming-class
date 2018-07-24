@@ -2,7 +2,12 @@ package raejin.mybrowser;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,5 +21,40 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        editText_url = (EditText)findViewById(R.id.editText_url);
+        webView_main = (WebView)findViewById(R.id.webView_main);
+        button_back = (Button)findViewById(R.id.button_back);
+        button_forward = (Button)findViewById(R.id.button_forward);
+
+        final WebSettings webSettings = webView_main.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+        webView_main.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+
+        button_forward.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                webView_main.goForward();
+            }
+        });
+
+        button_back.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                webView_main.goBack();
+            }
+        });
+
+        butto
     }
+
+
 }
