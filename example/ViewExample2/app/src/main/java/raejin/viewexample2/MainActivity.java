@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         //비디오뷰 예외 : 비디오 뷰의 객체에 미디어 컨트롤러 객체를 등록한다.
         videoView_video.setMediaController(mediaController);
 
-
         //4번째 단계 : 리스너의 객체를 만들자.
         RatingListener ratingListener = new RatingListener();
 
