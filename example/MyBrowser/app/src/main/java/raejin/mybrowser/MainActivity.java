@@ -66,5 +66,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    class webListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()) {
+                case R.id.button_forward:
+                    webView_main.goForward();
+                    break;
+                case R.id.button_back:
+                    webView_main.goBack();
+                    break;
+                case R.id.button_go:
+                    webView_main.loadUrl(editText_url.getText().toString());
+                    break;
+            }
+        }
+    }
 
 }
