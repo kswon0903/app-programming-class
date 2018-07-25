@@ -35,7 +35,7 @@ public class ReserveActivity extends AppCompatActivity {
                 new CalendarView.OnDateChangeListener() {
                     @Override
                     public void onSelectedDayChange(@NonNull CalendarView calendarView, int i, int i1, int i2) {
-                        Log.d("calender view", i +"/"+ i1 +"/"+ i2);
+                        Log.d("calender view ", i +"/"+ i1 +"/"+ i2);
                         Toast.makeText(getApplicationContext(),
                                 i +"/"+ i1 +"/"+ i2,
                                 Toast.LENGTH_SHORT).show();
