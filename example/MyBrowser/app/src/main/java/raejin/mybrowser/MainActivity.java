@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_main);
 
         editText_url = (EditText)findViewById(R.id.editText_url);
@@ -64,5 +66,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    class webListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()) {
+                case R.id.button_forward:
+                    webView_main.goForward();
+                    break;
+                case R.id.button_back:
+                    webView_main.goBack();
+                    break;
+                case R.id.button_go:
+                    webView_main.loadUrl(editText_url.getText().toString());
+                    break;
+            }
+        }
+    }
 
 }
