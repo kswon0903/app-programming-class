@@ -2,6 +2,7 @@ package raejin.calendarview;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -16,6 +17,7 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
     Button button_timePicker, button_datePicker;
     int year, month, day, hour, min;
+    Button button_call;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         button_datePicker = (Button)findViewById(R.id.button_datePicker);
         button_timePicker = (Button)findViewById(R.id.button_timePicker);
+
+        button_call = (Button)findViewById(R.id.button_call);
+
 
         GregorianCalendar calendar = new GregorianCalendar();
         year = calendar.get(Calendar.YEAR);
@@ -36,7 +41,22 @@ public class MainActivity extends AppCompatActivity {
 
         button_timePicker.setOnClickListener(pickerListener);
         button_datePicker.setOnClickListener(pickerListener);
+
+
+        CallListener callListener = new CallListener();
+        button_call.setOnClickListener(callListener);
     }
+
+    class CallListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(),
+                    SubActivity.class);
+            startActivity(intent);
+        }
+    }
+
 
     class PickerListener implements View.OnClickListener{
 
