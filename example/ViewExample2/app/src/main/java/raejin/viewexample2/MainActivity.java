@@ -4,7 +4,9 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.MediaController;
 import android.widget.RatingBar;
 import android.widget.SeekBar;
@@ -36,8 +38,20 @@ public class MainActivity extends AppCompatActivity {
 
         webView_internet = (WebView)findViewById(R.id.webView_internet);
 
+        //웹뷰 예외 : 웹페이지를 표시할 때 새창으로 표시하지 않도록 설정한다.
+        WebSettings ws = webView_internet.getSettings();
+        //웹뷰 예외 : 자바스크립트 사용을 허용한다.
+        ws.setJavaScriptEnabled(true);
+        webView_internet.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
         //웹뷰 예외 : 웹뷰가 표시할 사이트 주소를 설정한다.
         webView_internet.loadUrl("http://www.naver.com");
+
 
         //비디오뷰 예외 : 비디오가 어디에 저장되어 있는지 설정한다.
         Uri uri = Uri.parse("android.resource://"
