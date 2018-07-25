@@ -212,3 +212,5 @@ example/Views/gradle/wrapper/gradle-wrapper\.properties
 example/Views/\.idea/caches/build_file_checksums\.ser
 
 example/MyCalculator/\.idea/caches/build_file_checksums\.ser
+
+*.ser
