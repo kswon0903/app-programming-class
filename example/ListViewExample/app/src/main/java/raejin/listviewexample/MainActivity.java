@@ -14,6 +14,9 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     //2단계 : 리스트뷰의 객체를 저장할 변수를 만든다.
+    ListView listView_custom;
+    ArrayList<ItemDate> data_list;
+
     ListView listView_greatman;
 
     // 어답터에서 리스트뷰에게 전달할 자료들
@@ -26,8 +29,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //2단계 : 리스트뷰의 객체를 만든다.
+        listView_custom = (ListView)findViewById(R.id.listView_custom);
+
+        data_list = new ArrayList<ItemDate>();
+        data_list.add(new ItemDate(R.drawable.leesoonsin, "이순신"));
+        data_list.add(new ItemDate(R.drawable.gwanggaeto, "광개토대왕"));
+        data_list.add(new ItemDate(R.drawable.saimdang, "신사임당"));
+        data_list.add(new ItemDate(R.drawable.sejong, "세종대왕"));
+        data_list.add(new ItemDate(R.drawable.leesungkye, "이성계"));
+        data_list.add(new ItemDate(R.drawable.yoon, "윤봉길"));
+        data_list.add(new ItemDate(R.drawable.ann, "안중근"));
+
+
         listView_greatman = (ListView)findViewById(
                 R.id.listView_greatman);
+
+        // 커스텀 리스트뷰 예외
+
+
+
         // 리스트뷰 예외
         // 배열 자료를 리스트뷰로 전달해주는 어답터 : ArrayAdapter<T>
         // T대신에 자료형을 넣는다.
