@@ -87,8 +87,15 @@ public class MainActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeFile(
                             image_file.getAbsolutePath(),options);
 
+                    // 이미지의 크기에 맞게 리사이징하는 createScaledBitmap()
+                    // 첫번째는 비트맵 파일, 두번째는 너비, 세번째는 높이,
+                    // 네번째 리사이즈를 적용할 때 나타나는 이미지가 깨지는 것을 필터링 해줌
+                    // >> 이미지 깨짐을 최소화
+                    Bitmap bitmap_resize
+                            = Bitmap.createScaledBitmap(bitmap, 400, 300, true);
+
                     // 웹뷰에 이미지(비트맵파일)을 보여준다.
-                    imageView_sd.setImageBitmap(bitmap);
+                    imageView_sd.setImageBitmap(bitmap_resize);
 
                 }
             }
