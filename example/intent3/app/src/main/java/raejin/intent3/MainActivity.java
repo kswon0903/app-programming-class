@@ -6,6 +6,9 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,10 +25,67 @@ public class MainActivity extends AppCompatActivity {
     ImageView imageView_sd;
     String[] list;
 
+    Toolbar toolbar_main;
+
+    // 왼쪽 편에 있는 아이콘에 동작을 시키는 onSupportNavigateUP() 함수
+    public boolean onSupportNavigateUp() {
+        Toast.makeText(getApplicationContext(),
+                "안드로이드 버튼을 눌렸습니다.", Toast.LENGTH_SHORT).show();
+        // 안드로이드에서 백키를 누른 것과 같은 onBackPressed() 함수
+        onBackPressed();
+        return true;
+    }
+
+    // 메뉴에 동작을 시키는 onOptionItemSelected() 함수
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.item_main_setting:
+                // 데이터를 보내는 부분
+                // 인텐트 객체에 보내는 엑티비티, 받는 엑티비티를 적어준다.
+                Intent intent = new Intent(MainActivity.this,
+                        SubActivity.class);
+
+                // 인텐트 객체에 있는 putExtra()함수를 활용해서 데이터를 첨부한다.
+                // putExtra()함수에서 첫번째 매개변수는 데이터의 이름
+                // 두번째 매개변수는 전달할 데이터
+                intent.putExtra("INT_TYPE_NAME", 1234);
+                intent.putExtra("STR_TYPE_NAME", "안녕하세요");
+                intent.putExtra("BOOL_TYPE_NAME", true);
+                intent.putExtra("DOUBLE_TYPE_NAME", 3.141592);
+
+                // 다른 엑티비티에 이동한다.
+                startActivity(intent);
+                return true;
+            case R.id.item_main_close:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    //툴바 화면에 메뉴를 표시해주는 함수
+    public boolean onCreateOptionsMenu(Menu aMenu) {
+        getMenuInflater().inflate(R.menu.menu_main, aMenu);
+        return true;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // 툴바 만들기
+
+        // 툴바의 객체 만들기
+        toolbar_main = (Toolbar)findViewById(R.id.toolbar_main);
+        // 툴바의 제목을 수정할 수 있는 setTitle()함수 빈칸이면 아무글자도 안나타남
+        toolbar_main.setTitle("");
+
+        //제목 왼쪽에 아이콘을 배치할 경우
+        toolbar_main.setNavigationIcon(R.mipmap.ic_launcher);
+
+        // 엑티비티에 툴바를 설정하는 함수
+        setSupportActionBar(toolbar_main);
 
 
         // sd카드 1단계 : SD카드가 인식되어 있는지 확인한다.
