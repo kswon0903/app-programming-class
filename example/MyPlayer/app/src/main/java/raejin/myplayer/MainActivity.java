@@ -2,11 +2,16 @@ package raejin.myplayer;
 
 import android.media.MediaPlayer;
 import android.os.Environment;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -16,31 +21,157 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button_play, button_stop;
+    Button button_prev, button_play_pause, button_stop, button_next;
+    TextView textView_music_title;
+    ListView listView_playlist;
     MediaPlayer mediaPlayer;
-    String mp3_path;
+    ArrayList<String> music_path_list;
+    ArrayAdapter<String> adapter_playlist;
 
+    int play_index = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        button_play = (Button)findViewById(R.id.button_play_pause);
-        button_stop = (Button)findViewById(R.id.button_stop);
+        //컴포넌트의 객체를 생성함
+        button_prev = (Button) findViewById(R.id.button_prev);
+        button_play_pause = (Button) findViewById(R.id.button_play_pause);
+        button_stop = (Button) findViewById(R.id.button_stop);
+        button_next = (Button) findViewById(R.id.button_next);
+        textView_music_title = (TextView) findViewById(R.id.textView_music_title);
+        listView_playlist = (ListView) findViewById(R.id.listView_playlist);
         mediaPlayer = new MediaPlayer();
-
-        mp3_path = Environment.getExternalStorageDirectory().getAbsolutePath()+"/music.mp3";
+        // SD 카드에서 mp3파일을 검색하여 arrayList에 저장한다.
+        music_path_list = findFileByExt("mp3");
         try {
-            mediaPlayer.setDataSource(mp3_path);
-            mediaPlayer.prepare();
-        } catch(IOException ioe) {
-            ioe.printStackTrace();
+            if (music_path_list == null) { // 음악 파일의 경로를 읽어올 때 에러가 난 경우
+                Log.d("MediaPlayer", "music path list is null.");
+                throw new Exception();
+
+            } else if (music_path_list.size() == 0) { // mp3 파일이 없는 경우
+                Log.d("MediaPlayer", "music path list is empty.");
+                throw new Exception();
+            } else { // 찾은 mp3 파일에서 첫번째 파일을 재생할 준비
+                //play_index는 지금 재생할 mp3파일의 순서번호
+                mediaPlayer.setDataSource(music_path_list.get(play_index));
+                mediaPlayer.prepare();
+                Log.d("MediaPlayer", "media player object setting complete.");
+            }
+        } catch (Exception e) {
+            Log.d("MediaPlayer", e.getMessage());
         }
+        button_prev.setOnClickListener(new BtnListener());
+        button_play_pause.setOnClickListener(new BtnListener());
+        button_stop.setOnClickListener(new BtnListener());
+        button_next.setOnClickListener(new BtnListener());
 
-        Mp3Listener mp3Listener = new Mp3Listener();
+        adapter_playlist = new ArrayAdapter<String>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,
+                getMusicTitleFromPath(music_path_list));
+        listView_playlist.setOnItemClickListener(new ListListener());
+        listView_playlist.setAdapter(adapter_playlist);
+    }
 
-        button_play.setOnClickListener(mp3Listener);
-        button_stop.setOnClickListener(mp3Listener);
+    class ListListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            play_index = i;
+            playMusicByIndex(i);
+            setMusicTitle(i);
+        }
+    }
+
+    class BtnListener implements View.OnClickListener {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.button_prev:
+                    play_index =
+                            (play_index == 0 ? (music_path_list.size() - 1) : (play_index - 1));
+                    // 순서번호로 음악을 재생하는 함수
+                    playMusicByIndex(play_index);
+                    break;
+                case R.id.button_play_pause:
+                    // 음악을 재생하는 함수
+                    playMusic();
+                    break;
+                case R.id.button_stop:
+                    // 음악을 중단하는 함수
+                    stopMusic();
+                    break;
+                case R.id.button_next:
+                    play_index =
+                            (play_index == (music_path_list.size() - 1) ? 0 : (play_index + 1));
+                    playMusicByIndex(play_index);
+                    break;
+            }
+            // TextView에 제목을 출력해주는 함수
+            setMusicTitle(play_index);
+        }
+    }
+
+    private void setMusicTitle(int play_index) {
+        String path = music_path_list.get(play_index);
+        String[] split_path = path.split("/");
+//textView_music_title.setText(split_path[1)]);
+        textView_music_title.setText(split_path[(split_path.length - 1)]);
+    }
+
+    private ArrayList<String> getMusicTitleFromPath(ArrayList<String> path_list) {
+        ArrayList<String> result = new ArrayList<String>();
+        String[] split_path;
+        String path;
+        for (int i = 0; i < path_list.size(); i++) {
+            path = path_list.get(i);
+            split_path = path.split("/");
+
+            result.add(split_path[(split_path.length - 1)]);
+        }
+        return result;
+
+    }
+
+    private void stopMusic() {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.prepare();
+            }
+        } catch (Exception e) {
+            Log.d("stopMusic", e.getMessage());
+        }
+    }
+
+    private void playMusic() {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.pause();
+                button_play_pause.setText("일시중지");
+                Log.d("playMusic", "pause button pushed");
+            } else {
+                mediaPlayer.start();
+                button_play_pause.setText("재생");
+                Log.d("playMusic", "play button pushed");
+            }
+        } catch (Exception e) {
+            Log.d("playMusic", e.getMessage());
+        }
+    }
+
+    private void playMusicByIndex(int list_index) {
+        try {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+                mediaPlayer.prepare();
+            }
+            mediaPlayer.reset();
+            mediaPlayer.setDataSource(music_path_list.get(list_index));
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+
+        } catch (Exception e) {
+            Log.d("playMusicByIndex", e.getMessage());
+        }
     }
 
     private ArrayList<String> findFileByExt(String ext) {
@@ -78,32 +209,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    class Mp3Listener implements View.OnClickListener{
-
-        @Override
-        public void onClick(View view) {
-            switch(view.getId()) {
-                case R.id.button_play:
-                    if(mediaPlayer.isPlaying()) {
-                        mediaPlayer.pause();
-                    } else {
-                        mediaPlayer.start();
-
-                    }
-                    break;
-                case R.id.button_stop:
-                    if(mediaPlayer.isPlaying()) {
-                        mediaPlayer.stop();
-                        try {
-                            mediaPlayer.prepare();
-                        } catch(IOException ioe) {
-                            ioe.printStackTrace();
-                        }
-
-                        break;
-                    }
-            }
-        }
-    }
 }
