@@ -228,3 +228,13 @@ example/CookingTimer/\.idea/runConfigurations\.xml
 Toolbar/\.idea/codeStyles/Project\.xml
 
 Toolbar/\.idea/runConfigurations\.xml
+
+example/CalendarView/\.idea/runConfigurations\.xml
+
+example/CalendarView/build\.gradle
+
+example/CalendarView/gradle/wrapper/gradle-wrapper\.properties
+
+example/CalendarView/gradlew
+
+example/CalendarView/gradlew\.bat

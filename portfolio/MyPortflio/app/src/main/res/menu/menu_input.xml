@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menuItem_reserve_item1"
-        android:icon="@drawable/baseline_access_time_black_36"
-        android:title="Item1"
+        android:id="@+id/menuItem_input_item1"
+        android:icon="@drawable/baseline_done_black_36"
+        android:title="확인"
         app:showAsAction="always" />
 </menu>

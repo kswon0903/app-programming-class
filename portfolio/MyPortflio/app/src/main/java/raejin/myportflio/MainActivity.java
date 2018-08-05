@@ -7,10 +7,13 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.ArrayList;
+
 import raejin.util.Static;
 
 public class MainActivity extends AppCompatActivity {
     WebView webView_main;
+    public static ArrayList<ReserveInfo> infoArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         webView_main = (WebView)findViewById(R.id.webView_main);
+
+        infoArrayList = new ArrayList<ReserveInfo>();
 
         // 웹뷰 관련 세팅
         WebSettings ws = webView_main.getSettings();
