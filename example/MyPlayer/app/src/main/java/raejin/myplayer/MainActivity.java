@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     playMusicByIndex(play_index);
                     break;
                 case R.id.button_play_pause:
-                    // 음악을 재생하는 함수
+                    // 음악을 재생 일시중지할 때 활용하는 함수
                     playMusic();
                     break;
                 case R.id.button_stop:
@@ -110,13 +110,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 파일 이름만 저장한 리스트에서 순서번호로 제목을 텍스트뷰에 출력해주는 함수
+     */
     private void setMusicTitle(int play_index) {
         String path = music_path_list.get(play_index);
         String[] split_path = path.split("/");
-//textView_music_title.setText(split_path[1)]);
         textView_music_title.setText(split_path[(split_path.length - 1)]);
     }
 
+    /**
+     * mp3 파일 경로의 리스트를 활용하여 mp3 파일 이름만 저장한 리스트를 만든다.
+     * @param path_list 파일 경로를 저장한 리스트
+     * @return 파일 이름만 저장한 리스트
+     */
     private ArrayList<String> getMusicTitleFromPath(ArrayList<String> path_list) {
         ArrayList<String> result = new ArrayList<String>();
         String[] split_path;
@@ -131,24 +138,32 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * 재생을 중지하는 함수
+     */
     private void stopMusic() {
         try {
+            // 음악이 재생해야 중지 할수 있으므로 재생중인지 비교한다.
             if (mediaPlayer.isPlaying()) {
-                mediaPlayer.stop();
-                mediaPlayer.prepare();
+                mediaPlayer.stop();  // 음악을 중지 시킨다.
+                mediaPlayer.prepare(); // 다음에 음악을 재생할 준비를 한다.
             }
         } catch (Exception e) {
             Log.d("stopMusic", e.getMessage());
         }
     }
 
+    /**
+     * 음악을 재생 혹은 일시정지 하는 함수
+     */
     private void playMusic() {
         try {
-            if (mediaPlayer.isPlaying()) {
+            // 재생이 되어 있는지 여부에 따라서 일시중지 혹은 재생 기능을 수행
+            if (mediaPlayer.isPlaying()) { // 재생이 되어 있는 경우는 true, 아니면 false
                 mediaPlayer.pause();
                 button_play_pause.setText("일시중지");
                 Log.d("playMusic", "pause button pushed");
-            } else {
+            } else { // 재생이 되지 않은 경우
                 mediaPlayer.start();
                 button_play_pause.setText("재생");
                 Log.d("playMusic", "play button pushed");
@@ -158,22 +173,34 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * 파일 경로의 리스트에서 순서번호로 해당 파일을 재생하는 함수
+     * @param list_index 리스트의 순서번호
+     */
     private void playMusicByIndex(int list_index) {
         try {
+            // 현재 다른 파일을 재생하고 있는지 확인
             if (mediaPlayer.isPlaying()) {
+                // 재생중이라면 음악을 멈추고 준비상태로 바꾼다.
                 mediaPlayer.stop();
                 mediaPlayer.prepare();
             }
-            mediaPlayer.reset();
-            mediaPlayer.setDataSource(music_path_list.get(list_index));
-            mediaPlayer.prepare();
-            mediaPlayer.start();
+            // 새로운 음악파일을 재생한다.
+            mediaPlayer.reset(); // 미디어 플레이어의 세팅을 초기화 해준다.
+            mediaPlayer.setDataSource(music_path_list.get(list_index)); // 재생할 mp3 파일의 경로를 등록한다.
+            mediaPlayer.prepare(); // 음악파일을 재생할 준비를 한다.
+            mediaPlayer.start(); // 음악파일을 재생한다.
 
         } catch (Exception e) {
             Log.d("playMusicByIndex", e.getMessage());
         }
     }
 
+    /**
+     * SD카드에서 특정 확장자 이름을 가진 파일 경로를 리스트로 만들어 주는 함수
+     * @param ext 확장자 이름
+     * @return 파일의 경로를 가지고 있는 리스트
+     */
     private ArrayList<String> findFileByExt(String ext) {
         ArrayList<String> temp_array = new ArrayList<String>();
         final String file_ext = ext;
